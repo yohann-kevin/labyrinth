@@ -2,7 +2,7 @@ var nbLine = 4;
 var nbColumn = 4;
 var positionPlayer = [0,0];
 
-const labyrinthe = document.getElementById("labyrinthe");
+const labyrinth = document.getElementById("labyrinthe");
 
 var line1 = [5,10,1,7];
 var line2 = [5,14,5,5];
@@ -10,10 +10,10 @@ var line3 = [4,1,8,5];
 var line4 = [14,9,12,9];
 var tabGames = [line1,line2,line3,line4]
 
-displayLabyrinthe(tabGames);
+displayLabyrinth(tabGames);
 
-function displayLabyrinthe(tabGames) {
-    labyrinthe.innerHTML = " ";
+function displayLabyrinth(tabGames) {
+    labyrinth.innerHTML = " ";
     var content = "<table class='labyrintheTable'>";
     for(var i = 0; i < tabGames.length;i++) {
         content += "<tr>";
@@ -35,9 +35,27 @@ function displayLabyrinthe(tabGames) {
         content += "</tr>";
     }
     content += "</table>";
-    labyrinthe.innerHTML = content;
+    labyrinth.innerHTML = content;
 }
 
-
+addEventListener("keyup", function(event) {
+    var linePlayer = positionPlayer[0];
+    var columnPlayer = positionPlayer[1];
+    if(event.keyCode === 81 && columnPlayer > 0) { //déplacement vers la gauche
+        columnPlayer--;
+    }
+    if(event.keyCode === 68 && columnPlayer < nbColumn - 1) { //déplacement vers la droite
+        columnPlayer++;
+    }
+    if(event.keyCode === 83 && linePlayer < nbLine - 1) { //déplacement vers le bas
+        linePlayer++;
+    }
+    if(event.keyCode === 90 && linePlayer > 0) { // déplacement vers le haut
+        linePlayer--;
+    }
+    positionPlayer = [linePlayer,columnPlayer];
+    displayLabyrinth(tabGames);
+    this.console.log(event.keyCode);
+}) 
 
 
