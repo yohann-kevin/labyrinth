@@ -1,9 +1,11 @@
+const labyrinth = document.querySelector("#labyrinthe");
+const labyrinthWin = document.querySelector("#alertLabyrinth");
+
 var nbLine = 4;
 var nbColumn = 4;
 
 var positionPlayer = [0,0];
-
-const labyrinth = document.querySelector("#labyrinthe");
+var level = 1;
 
 var line1 = [createBox(5),createBox(10),createBox(1),createBox(7)];
 var line2 = [createBox(5),createBox(14),createBox(5),createBox(5)];
@@ -13,6 +15,7 @@ var tabGames = [line1,line2,line3,line4];
 
 displayLabyrinth(tabGames);
 
+// créer une case
 function createBox(image){
     var box = {
         image : image,
@@ -22,25 +25,33 @@ function createBox(image){
         bot : getBot(image)
     }
     return box;
-}
 
+}
+// vérifie si on peut aller a gauche
 function getLeft(image){
     if(image === 0 || image === 1 || image === 2 || image === 3 || image === 6 || image === 7 || image === 8 || image === 12) return true;
     return false;
 }
+
+// vérifie si on peut aller en haut
 function getTop(image){
     if(image === 0 || image === 2 || image === 3 || image === 4 || image === 5 || image === 8 || image === 9 || image === 14) return true;
     return false;
 }
+
+// vérifie si on peut aller a droite
 function getRight(image){
     if(image === 0 || image === 1 || image === 3 || image === 4 || image === 6 || image === 9 || image === 10 || image === 13) return true;
     return false;
 }
+
+// vérifie si on peut aller en bas
 function getBot(image){
     if(image === 0 || image === 1 || image === 2 || image === 4 || image === 5 || image === 7 || image === 10 || image === 11) return true;
     return false;
 }
 
+// affiche le labytinthe
 function displayLabyrinth(tabGames){
     labyrinth.innerHTML = "";
     var content ="<table>";
@@ -67,10 +78,12 @@ function displayLabyrinth(tabGames){
     labyrinth.innerHTML = content;
 }
 
+// récupere une case
 function getBox(i,j){
     return tabGames[i][j];
 }
 
+// permet a l'utilisateur de pouvoir se déplacer
 addEventListener("keyup",function(event){
     var linePlayer = positionPlayer[0];
     var columnPlayer = positionPlayer[1];
@@ -99,8 +112,21 @@ addEventListener("keyup",function(event){
     verifyWin();
 });
 
+// vérifie si on a gagné
 function verifyWin(){
     if(positionPlayer[0] === nbLine-1 && positionPlayer[1] === nbColumn-1){
-        alert("Win");
+        var content = "";
+        if(level < 1) {
+            content += "<p>Bien joué ! Passer au niveau : " + (level+1) + "? </p>";
+            content += "<button onClick='nextLevel'> Suivant </button>";  
+        } else {
+            content += "<p>Vous avez gagné !</p>";
+        }
+        labyrinthWin.innerHTML = content;
+        labyrinthWin.style.display = "block";
     }
+}
+
+function nextLevel() {
+    
 }
