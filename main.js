@@ -5,15 +5,10 @@ var nbLine = 4;
 var nbColumn = 4;
 
 var positionPlayer = [0,0];
-var level = 1;
+var level = 0;
 
-var line1 = [createBox(5),createBox(10),createBox(1),createBox(7)];
-var line2 = [createBox(5),createBox(14),createBox(5),createBox(5)];
-var line3 = [createBox(4),createBox(1),createBox(8),createBox(5)];
-var line4 = [createBox(14),createBox(9),createBox(12),createBox(9)];
-var tabGames = [line1,line2,line3,line4];
-
-displayLabyrinth(tabGames);
+var tabGames = null;
+nextLevel();
 
 // créer une case
 function createBox(image){
@@ -127,6 +122,25 @@ function verifyWin(){
     }
 }
 
+// permet de passer au niveau suivant
 function nextLevel() {
-    
+    level++;
+    labyrinthWin.style.display = "none";
+    nbLine = 4;
+    nbColumn = 4;
+    positionPlayer[0,0];
+    tabGames = loadLevel();
+
+    displayLabyrinth(tabGames);
+
+}
+
+// permet de charger un niveau
+function loadLevel() {
+    var line1 = [createBox(5),createBox(10),createBox(1),createBox(7)];
+    var line2 = [createBox(5),createBox(14),createBox(5),createBox(5)];
+    var line3 = [createBox(4),createBox(1),createBox(8),createBox(5)];
+    var line4 = [createBox(14),createBox(9),createBox(12),createBox(9)];
+    var tab = [line1,line2,line3,line4];
+    return tab;
 }
