@@ -20,8 +20,8 @@ function createBox(image){
         bot : getBot(image)
     }
     return box;
-
 }
+
 // vérifie si on peut aller a gauche
 function getLeft(image){
     if(image === 0 || image === 1 || image === 2 || image === 3 || image === 6 || image === 7 || image === 8 || image === 12) return true;
@@ -111,9 +111,9 @@ addEventListener("keyup",function(event){
 function verifyWin(){
     if(positionPlayer[0] === nbLine-1 && positionPlayer[1] === nbColumn-1){
         var content = "";
-        if(level < 1) {
+        if(level < levels.nbLevel) {
             content += "<p>Bien joué ! Passer au niveau : " + (level+1) + "? </p>";
-            content += "<button onClick='nextLevel'> Suivant </button>";  
+            content += "<button onClick='nextLevel()'> Suivant </button>";  
         } else {
             content += "<p>Vous avez gagné !</p>";
         }
@@ -126,21 +126,23 @@ function verifyWin(){
 function nextLevel() {
     level++;
     labyrinthWin.style.display = "none";
-    nbLine = 4;
-    nbColumn = 4;
+    nbLine = levels["level"+level].nbLine;
+    nbColumn = levels["level"+level].nbColumn;
     positionPlayer[0,0];
     tabGames = loadLevel();
-
     displayLabyrinth(tabGames);
-
 }
 
 // permet de charger un niveau
 function loadLevel() {
-    var line1 = [createBox(5),createBox(10),createBox(1),createBox(7)];
-    var line2 = [createBox(5),createBox(14),createBox(5),createBox(5)];
-    var line3 = [createBox(4),createBox(1),createBox(8),createBox(5)];
-    var line4 = [createBox(14),createBox(9),createBox(12),createBox(9)];
-    var tab = [line1,line2,line3,line4];
+    var tab = [];
+    for(var i = 1 ; i <= levels["level"+level].nbLine; i++) {
+        var line = [];
+        for(var j = 1 ; j <= levels["level"+level].nbColumn; j++) {
+            var values = levels["level"+level]["line"+i]["case"+j];
+            line.push(createBox(values));
+        }
+        tab.push(line);
+    }
     return tab;
 }
